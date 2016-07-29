@@ -1,0 +1,262 @@
+<html>
+<!-- saved from url=(0016)http://localhost -->
+
+<head>
+  <title>Convert Papagayo</title>
+
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+
+  <script type="text/javascript" src="jquery-1.11.3.js"></script>
+
+  <script type="text/javascript">
+
+//Configure these to match your character.
+//Edit the configuration of the framenumbers of your mouthshape.pli file:
+var mapObj = {
+   rest:"0010",
+   AI:"0002",
+   E:"0003",
+   FV:"0004",
+   L:"0005",
+   MBP:"0006",
+   O:"0007",
+   U:"0008",
+   WQ:"0009",
+   etc:"0012"
+};
+
+
+//Level id of your mouthshape file. Search in your scene file (which ends in.tnz)  
+//for the .pli containing your mouthshapes and check its level-id.
+var levelid = 4;
+
+
+//Manual configuration ends here
+
+    $(document).ready(function() {
+    
+        window.moveTo(0, 0);
+        window.resizeTo(screen.availWidth, screen.availHeight);
+
+//disable simple view_source
+  $(document).on("contextmenu",function(e){
+        return false;
+    });
+
+
+var text=$('#txtArea').text("Load a papagayo voice.dat file...");
+
+
+ function readSingleFile(evt) {
+    //Retrieve the first (and only!) File from the FileList object
+    var f = evt.target.files[0]; 
+
+    if (f) {
+      var r = new FileReader();
+      r.onload = function(e) { 
+	      var contents = e.target.result; 
+
+$('#txtArea').text( contents );
+var allRows = contents.split(/\r?\n|\r/);
+var nr = 1;
+
+
+allRows.forEach( function(s) { 
+
+
+if (nr < allRows.length-2 ) {
+var array = allRows[nr].split(/\s/),
+    a = array[0], b = array[1];
+
+b = b.replace(/rest|AI|etc|FV|L|MBP|O|U|WQ|E/gi, function(matched){
+  return mapObj[matched];
+});
+
+var nextarray = allRows[nr+1].split(/\s/),
+    c = nextarray[0], d = nextarray[1];
+
+
+var text = "\n<cell> "+a+ " " + (c-a) +"<level id=\'"+levelid+"\'/>"+ b +" 0 </cell>";
+
+$('#txtArea2').val(function(_, val){
+    return val + text; 
+});
+
+}
+
+
+
+if (nr == allRows.length-2 ) {
+
+var array = allRows[nr].split(/\s/),
+    a = array[0], b = array[1];
+
+
+b = b.replace(/rest|AI|etc|FV|L|MBP|O|U|WQ|E/gi, function(matched){
+  return mapObj[matched];
+});
+
+
+var c = parseInt(a)+5;
+
+
+var text = "\n<cell> "+a+ " " + (c-a) +"<level id=\'"+levelid+"\'/>"+ b +" 0 </cell>";
+
+
+$('#txtArea2').val(function(_, val){
+    return val + text; 
+});
+}
+
+
+nr++
+} );
+
+
+
+      }
+      r.readAsText(f);
+    } else { 
+      alert("Failed to load file");
+    }
+  }
+
+  document.getElementById('fileinput').addEventListener('change', readSingleFile, false);
+
+
+
+
+ });
+</script>
+<style>
+body {
+  font: 100 1.2vw 'Arial', helvetica, sans-serif, calibri;
+  letter-spacing: 1px;
+}
+
+table {
+  border-collapse: collapse;
+  margin-left: 1.8vw;
+}
+
+tr {
+  background: #fff;
+  border: 1px solid #666;
+}
+/*  Define the background color for all the ODD background rows  */
+
+tr {
+  background: #efefef;
+}
+
+td {
+  background: #fff; //#9fc5fd;
+  width: 25vw;
+  padding-left: 2px;
+}
+
+input {
+  border: none;
+  border-right: 1px solid #666;
+  width: 85%;
+  font: 100 1.2vw helvetica, sans-serif, calibri;
+  font-size: 1.2vw;
+  padding: 1px;
+  letter-spacing: 1px;
+  text-align: left;
+  background-color: "#eee";
+  padding-left: 2px;
+}
+
+input:hover {
+  //background-color: #eee;
+  cursor: pointer;
+  box-shadow: 0 0 10px 100px #f2f2f2 inset;
+  transition: all .4s ease-in-out;
+  font-color: #000;
+  color: #000;
+}
+
+input:focus {
+  background-color: #f2f2f2;
+  font-color: #000;
+  color: #000;
+}
+
+input:not(:focus) {
+  text-align: left;
+}
+
+input[type="text"] {
+  background-color: "#eee";
+  padding-left: 2px;
+}
+
+select {
+  //-webkit-appearance: none;
+  //-moz-appearance: none;
+  //appearance: none;
+  margins: 1px;
+  width: 85%;
+  font-size: 1.2vw;
+  padding: 1px;
+  letter-spacing: 1px;
+  text-align: left;
+  background-color: "#eee";
+  border: none;
+  border-right: 1px solid #666;
+  box-shadow: none;
+  background-image: none;
+  font: 100 1.2vw helvetica, sans-serif, calibri;
+}
+
+a {
+  color: #000;
+  //margin-left: 10px;
+  padding: 2px;
+  background-color: none;
+}
+
+a:hover {
+  color: #666;
+  padding: 2px;
+  transition: all .4s ease-out;
+  text-align: center;
+}
+
+i {
+  text-align: center;
+  padding: 2px;
+  margin: 2px;
+}
+
+select:focus {
+  outline: none;
+}
+
+select:hover {
+  box-shadow: 0 0 10px 100px #eee inset;
+  transition: all .4s ease-in-out;
+  //font-color: #eee;
+ // background: #666;
+}
+</style>
+</head>
+
+<body>
+
+<input type="file" id="fileinput" />
+
+<textarea id='txtArea' rows="6" cols="100">
+</textarea>
+<br><hr>
+<textarea id='txtArea2' rows="20" cols="100">
+
+</textarea>
+
+</body>
+
+
+</html>
+
