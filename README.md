@@ -11,6 +11,8 @@ Open the papagayo.dat voice file by browsing to it. It should convert to xml cel
 Copy the xml and open (a copy of) your scenefile (which has a .tnz extension) in a notepad or another texteditor. Search for "cells" and look for the one containing the level-id of the mouth.pli of your character.
 The xml in the textbox should be pasted in the tnz file between the [cells] ... [/cells] containing the level-id of the mouth of your character.
 
+The version I'm using of papagayo is updated for more languages. Get it here:
+https://morevnaproject.org/papagayo/
 
 
 
