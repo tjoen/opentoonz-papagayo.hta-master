@@ -13,23 +13,24 @@
 
 //Configure these to match your character.
 //Edit the configuration of the framenumbers of your mouthshape.pli file:
+// You could use another rest pose -> or use the MBP shape like I did
 var mapObj = {
-   rest:"0010",
-   AI:"0002",
-   E:"0003",
-   FV:"0004",
-   L:"0005",
-   MBP:"0006",
-   O:"0007",
-   U:"0008",
-   WQ:"0009",
-   etc:"0012"
+   rest:"0007",
+   AI:"0001",
+   E:"0002",
+   O:"0003",
+   U:"0004",
+   etc:"0005",
+   WQ:"0006",
+   MBP:"0007",
+   L:"0008",
+   FV:"0009"
 };
 
 
 //Level id of your mouthshape file. Search in your scene file (which ends in.tnz)  
 //for the .pli containing your mouthshapes and check its level-id.
-var levelid = 4;
+var levelid = 8;
 
 
 //Manual configuration ends here
@@ -77,7 +78,7 @@ var nextarray = allRows[nr+1].split(/\s/),
     c = nextarray[0], d = nextarray[1];
 
 
-var text = "\n<cell> "+a+ " " + (c-a) +"<level id=\'"+levelid+"\'/>"+ b +" 0 </cell>";
+var text = "\n<cell> "+(a-1)+ " " + (c-a) +"<level id=\'"+levelid+"\'/>"+ b +" 0 </cell>";
 
 $('#txtArea2').val(function(_, val){
     return val + text; 
@@ -101,7 +102,7 @@ b = b.replace(/rest|AI|etc|FV|L|MBP|O|U|WQ|E/gi, function(matched){
 var c = parseInt(a)+5;
 
 
-var text = "\n<cell> "+a+ " " + (c-a) +"<level id=\'"+levelid+"\'/>"+ b +" 0 </cell>";
+var text = "\n<cell> "+(a-1)+ " " + (c-a) +"<level id=\'"+levelid+"\'/>"+ b +" 0 </cell>";
 
 
 $('#txtArea2').val(function(_, val){
