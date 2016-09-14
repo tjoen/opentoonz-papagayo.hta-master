@@ -2,8 +2,11 @@
 Simple hta javascript gui that converts papagayo voices to a new opentoonz scenefile.
 
 1> Select your opentoonz (template) file
+
 2> Select your papagayo file
+
 3> select the level(s) you want to insert the keyframes in. 
+
 4> convert and save to new scenefile
 
 <img src="screenshot.png">
