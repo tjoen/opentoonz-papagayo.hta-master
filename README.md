@@ -3,7 +3,8 @@ It's a very handy hta/javascript gui that inserts and converts a papagayo voice.
 
 To use it, you must make mouthshapes for your character. 
 The .hta file has a variable containing which frame numbers to use. 
-Use or adjust these to suit your character. Use the same format as shown now ( 0001 - 0011 )
+Use or adjust these to suit your character. Use the same format as shown now ( 0001 - 0011 ).
+
 It uses preston blair format for now.
 
 var mapObj = {
@@ -21,10 +22,13 @@ var mapObj = {
 
 
 # Converting the papagayo stuff 
-. 1> Select your opentoonz (template) file
-. 2> Select your papagayo file
-. 3> select the level(s) you want to insert the keyframes in. 
-. 4> convert and save to new scenefile
+1> Select your opentoonz (template) file
+
+2> Select your papagayo file
+
+3> select the level(s) you want to insert the keyframes in.
+
+4> convert and save to new scenefile
 
 <img src="screenshot.png">
 
