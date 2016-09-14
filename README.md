@@ -32,12 +32,12 @@ var mapObj = {
 <img src="screenshot.png">
 
 >I'm using an updated version of papagayo that has much better language support. Get it here:
-https://morevnaproject.org/papagayo/
+- https://morevnaproject.org/papagayo/
 
 # Some animation footage made using this converter: 
 
-[Donald Trump is Learning to Lie...](https://youtu.be/4O1BLhU_a3Q "Trum Petty on youtube")
-[Deat Satan, real tweets to the dark lord ](https://youtu.be/9i4RP6qqUTI "Dear Satan")
+- [Donald Trump is Learning to Lie...](https://youtu.be/4O1BLhU_a3Q "Trum Petty on youtube")
+- [Dear Satan, real tweets to the dark lord ](https://youtu.be/9i4RP6qqUTI "Dear Satan")
  
 
 
