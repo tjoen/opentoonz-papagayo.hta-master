@@ -21,25 +21,26 @@ var mapObj = {
 };
 
 
-# Converting the papagayo stuff 
-1> Select your opentoonz (template) file
+# Converting the papagayo data 
+1. Select your opentoonz (template) file
+2. Select your papagayo exported voice(.dat) file
+3. Select the level(s) you want to insert the keyframes in.
+4. Convert and save to new scenefile
+5. Open your exported.tnz in Opentoonz, and add the audio.wav you used in papagayo on the first frame. 
 
-2> Select your papagayo file
-
-3> select the level(s) you want to insert the keyframes in.
-
-4> convert and save to new scenefile
-
+# Screenshot of the gui
 <img src="screenshot.png">
 
-I'm using an updated version of papagayo that has better language support. Get it here:
+>I'm using an updated version of papagayo that has much better language support. Get it here:
 https://morevnaproject.org/papagayo/
 
 # Some animation footage made using this converter: 
 
-https://youtu.be/4O1BLhU_a3Q 
+[Donald Trump is Learning to Lie...](https://youtu.be/4O1BLhU_a3Q "Trum Petty on youtube")
+[Deat Satan, real tweets to the dark lord ](https://youtu.be/9i4RP6qqUTI "Dear Satan")
+ 
 
-https://youtu.be/9i4RP6qqUTI
+
 
 
 
