@@ -1,19 +1,19 @@
-<html>
 <!-- saved from url=(0016)http://localhost -->
 
 <head>
-  <title>Convert Papagayo</title>
-
+  <title>Papagayo to OpenToonz Converter</title>
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
 
   <script type="text/javascript" src="jquery-1.11.3.js"></script>
-
   <script type="text/javascript">
 
-//Configure these to match your character.
-//Edit the configuration of the framenumbers of your mouthshape.pli file:
+//##########################################################################
+// Configure these to match your character!
+// Edit the configuration of the framenumbers of your mouthshape.pli file:
 // You could use another rest pose -> or use the MBP shape like I did
+//##########################################################################
+
 var mapObj = {
    rest:"0007",
    AI:"0001",
@@ -26,238 +26,625 @@ var mapObj = {
    L:"0008",
    FV:"0009"
 };
-
-
-//Level id of your mouthshape file. Search in your scene file (which ends in.tnz)  
-//for the .pli containing your mouthshapes and check its level-id.
-var levelid = 8;
-
-
+//##########################################################################
 //Manual configuration ends here
-
-    $(document).ready(function() {
-    
-        window.moveTo(0, 0);
-        window.resizeTo(screen.availWidth, screen.availHeight);
-
-//disable simple view_source
-  $(document).on("contextmenu",function(e){
-        return false;
-    });
-
-
-var text=$('#txtArea').text("Load a papagayo voice.dat file...");
-
-
- function readSingleFile(evt) {
-    //Retrieve the first (and only!) File from the FileList object
-    var f = evt.target.files[0]; 
-
-    if (f) {
-      var r = new FileReader();
-      r.onload = function(e) { 
-	      var contents = e.target.result; 
-
-$('#txtArea').text( contents );
-var allRows = contents.split(/\r?\n|\r/);
-var nr = 1;
-
-
-allRows.forEach( function(s) { 
-
-
-if (nr < allRows.length-2 ) {
-var array = allRows[nr].split(/\s/),
-    a = array[0], b = array[1];
-
-b = b.replace(/rest|AI|etc|FV|L|MBP|O|U|WQ|E/gi, function(matched){
-  return mapObj[matched];
-});
-
-var nextarray = allRows[nr+1].split(/\s/),
-    c = nextarray[0], d = nextarray[1];
-
-
-var text = "\n<cell> "+(a-1)+ " " + (c-a) +"<level id=\'"+levelid+"\'/>"+ b +" 0 </cell>";
-
-$('#txtArea2').val(function(_, val){
-    return val + text; 
-});
-
-}
-
-
-
-if (nr == allRows.length-2 ) {
-
-var array = allRows[nr].split(/\s/),
-    a = array[0], b = array[1];
-
-
-b = b.replace(/rest|AI|etc|FV|L|MBP|O|U|WQ|E/gi, function(matched){
-  return mapObj[matched];
-});
-
-
-var c = parseInt(a)+5;
-
-
-var text = "\n<cell> "+(a-1)+ " " + (c-a) +"<level id=\'"+levelid+"\'/>"+ b +" 0 </cell>";
-
-
-$('#txtArea2').val(function(_, val){
-    return val + text; 
-});
-}
-
-
-nr++
-} );
-
-
-
-      }
-      r.readAsText(f);
-    } else { 
-      alert("Failed to load file");
-    }
-  }
-
-  document.getElementById('fileinput').addEventListener('change', readSingleFile, false);
-
-
-
-
- });
 </script>
-<style>
+
+
+
+
+
+
+
+
+
+
+
+
+<link href='http://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+<style type="text/css">
 body {
-  font: 100 1.2vw 'Arial', helvetica, sans-serif, calibri;
-  letter-spacing: 1px;
+    font-family: 'Open Sans', arial, sans;
+    width: 100%;
+    padding: 20px;
+    background: #FFFFFF;
+    margin: 20px auto;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+}
+.levbut {
+    -moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+    box-shadow: inset 0px 1px 0px 0px #45D6D6;
+    background-color: #2CBBBB;
+    border: 1px solid #27A0A0;
+    display: inline-block;
+    cursor: pointer;
+    color: #FFFFFF;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    padding: 8px 18px;
+    text-decoration: none;
+    text-transform: uppercase;
+    width: 40%;
+    display: inline-block;
+   // padding: 5px;
+    vertical-align: top;
+    margin: 5px;
+   // border: 1px solid #666;
+}
+.levbut:hover {
+    background: linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
+    background-color: #34CACA;
+    cursor: pointer;
 }
 
-table {
-  border-collapse: collapse;
-  margin-left: 1.8vw;
+.select1 {
+    background: linear-gradient(to bottom, #CCC 5%, #666 100%);
+    background-color: #DDD;
+    cursor: pointer;
 }
 
-tr {
-  background: #fff;
-  border: 1px solid #666;
-}
-/*  Define the background color for all the ODD background rows  */
-
-tr {
-  background: #efefef;
+.select1:hover {
+    background: linear-gradient(to bottom, #DDD 5%, #333 100%);
+    background-color: #666;
+    cursor: pointer;
 }
 
-td {
-  background: #fff; //#9fc5fd;
-  width: 25vw;
-  padding-left: 2px;
-}
 
-input {
-  border: none;
-  border-right: 1px solid #666;
-  width: 85%;
-  font: 100 1.2vw helvetica, sans-serif, calibri;
-  font-size: 1.2vw;
-  padding: 1px;
-  letter-spacing: 1px;
-  text-align: left;
-  background-color: "#eee";
-  padding-left: 2px;
-}
+/* unvisited link */
 
-input:hover {
-  //background-color: #eee;
-  cursor: pointer;
-  box-shadow: 0 0 10px 100px #f2f2f2 inset;
-  transition: all .4s ease-in-out;
-  font-color: #000;
-  color: #000;
-}
-
-input:focus {
-  background-color: #f2f2f2;
-  font-color: #000;
-  color: #000;
-}
-
-input:not(:focus) {
-  text-align: left;
-}
-
-input[type="text"] {
-  background-color: "#eee";
-  padding-left: 2px;
-}
-
-select {
-  //-webkit-appearance: none;
-  //-moz-appearance: none;
-  //appearance: none;
-  margins: 1px;
-  width: 85%;
-  font-size: 1.2vw;
-  padding: 1px;
-  letter-spacing: 1px;
-  text-align: left;
-  background-color: "#eee";
-  border: none;
-  border-right: 1px solid #666;
-  box-shadow: none;
-  background-image: none;
-  font: 100 1.2vw helvetica, sans-serif, calibri;
-}
-
+a:link,
 a {
-  color: #000;
-  //margin-left: 10px;
-  padding: 2px;
-  background-color: none;
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
 }
+/* visited link */
+
+a:visited {
+    color: #666;
+    text-decoration: none;
+    font-size: 14px;
+}
+/* mouse over link */
 
 a:hover {
-  color: #666;
-  padding: 2px;
-  transition: all .4s ease-out;
-  text-align: center;
+    background-color: #666;
+    color: hotpink;
+    font-size: 14px;
 }
+/* selected link */
 
-i {
-  text-align: center;
-  padding: 2px;
-  margin: 2px;
+a:active {
+    color: #666;
+    font-size: 14px;
 }
-
-select:focus {
-  outline: none;
+textarea {
+    font-family: 'Open Sans', arial, sans;
+    width: 90%;
+    padding: 10px;
+    background: #FFFFFF;
+    margin: 20px auto;
+    font-size: 16px;
+    font-weight: 200;
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    -moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+    -webkit-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
 }
-
-select:hover {
-  box-shadow: 0 0 10px 100px #eee inset;
-  transition: all .4s ease-in-out;
-  //font-color: #eee;
- // background: #666;
+.form-style-8 h2,
+h2 {
+    background: #4D4D4D;
+    text-transform: uppercase;
+    font-family: 'Open Sans', sans-serif;
+    color: #EEE;
+    font-size: 18px;
+    font-weight: 200;
+    padding: 20px;
+    margin: -30px -30px 30px -30px;
+}
+.form-style-8 input[type="text"],
+.form-style-8 input[type="date"],
+.form-style-8 input[type="datetime"],
+.form-style-8 input[type="email"],
+.form-style-8 input[type="number"],
+.form-style-8 input[type="search"],
+.form-style-8 input[type="time"],
+.form-style-8 input[type="url"],
+.form-style-8 input[type="password"],
+.form-style-8 input[type="file"],
+.form-style-8 textfield,
+.form-style-8 select {
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    outline: none;
+    display: block;
+    width: 90%;
+    padding: 7px;
+    border: none;
+    border-bottom: 1px solid #ddd;
+    background: transparent;
+    margin-bottom: 10px;
+    font: 16px Arial, Helvetica, sans-serif;
+    height: 45px;
+}
+.form-style-8 textfield {
+    resize: none;
+    overflow: hidden;
+}
+.form-style-8 input[type="button"],
+input[type="button"],
+.form-style-8 input[type="submit"],
+input[type="submit"] {
+    -moz-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+    -webkit-box-shadow: inset 0px 1px 0px 0px #45D6D6;
+    box-shadow: inset 0px 1px 0px 0px #45D6D6;
+    background-color: #2CBBBB;
+    border: 1px solid #27A0A0;
+    display: inline-block;
+    cursor: pointer;
+    color: #FFFFFF;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 14px;
+    padding: 8px 18px;
+    text-decoration: none;
+    text-transform: uppercase;
+}
+.form-style-8 input[type="button"]:hover,
+.form-style-8 input[type="submit"]:hover {
+    background: linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
+    background-color: #34CACA;
+}
+#outer {
+    margin: 5% auto 40px auto;
+    background-color: #f5f5f5;
+    background-image: -moz-linear-gradient(top, #f1f1f1, #ebebeb, #f1f1f1);
+    background-image: -webkit-linear-gradient(top, #f1f1f1, #ebebeb, #f1f1f1);
+    height: auto;
+    width: 336px;
+    border-radius: 6px;
+    box-shadow: 0 0 0 1px #a3a3a3 inset, 0 0 0 2px #fff inset, 0 6px 0 0 #b2b1b1, 0 5px 0 0 #a5a5a5, 0 7px 5px 1px rgba(0, 0, 0, .5);
+}
+#inner {
+    padding: 16px 0 16px 0;
+    height: auto;
+    width: auto;
+}
+fieldset {
+    padding: 0 16px;
+    width: auto;
+    background: ;
+}
+.hz {
+    border-bottom: 1px solid #fff;
+    border-top: 1px solid #d3d3d3;
+    height: 0;
+    width: 330px;
+    margin: 0 auto 20px auto;
+    padding: 0;
+}
+input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+input,
+label,
+a.again {
+    font-family: "Open Sans";
+    font-weight: bold;
+    font-size: 12px;
+}
+.text-wrap {
+    width: 296px;
+    height: 27px;
+    background-image: -moz-linear-gradient(top, #e9edee, #d0d4d6);
+    background-image: -webkit-linear-gradient(top, #e9edee, #d0d4d6);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, .4) inset;
+    border-radius: 4px;
+    border: 1px solid #b5b9ba;
+    padding: 3px;
+    margin-bottom: 20px;
+}
+input[type=text] {
+    height: 25px;
+    width: 294px;
+    border: 1px solid #b0b4b6;
+    padding: 0;
+    margin: 0;
+    background: #fff;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .2) inset;
+    border-radius: 3px;
+    text-indent: 5px;
+    color: #757575;
+}
+::-webkit-input-placeholder {
+    color: #d1d1d1;
+}
+input:-moz-placeholder {
+    color: #d1d1d1;
+}
+.radio-wrap {
+    height: 30px;
+    position: relative;
+    float: left;
+    display: inline-block;
+    margin-bottom: 20px;
+}
+.radio-wrap.half {
+    width: 50%;
+}
+.radio-wrap.third {
+    width: 33.3%;
+}
+:root input.custom-radio {
+    position: absolute;
+    clip: rect(0, 0, 0, 0);
+}
+:root input.custom-radio ~ label {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border: 1px solid #bebebe;
+    background-image: -moz-linear-gradient(top, #fefefe, #e1e1e1);
+    background-image: -webkit-linear-gradient(top, #fefefe, #e1e1e1);
+    text-align: center;
+    line-height: 28px;
+    cursor: pointer;
+    color: #888;
+    text-shadow: 0 1px 0 #fff;
+}
+:root input.custom-radio ~ label[for=kilometres],
+:root input.custom-radio ~ label[for=ukgallons] {
+    border-left: none;
+    border-top-right-radius: 4px;
+    -moz-border-radius-topright: 4px;
+    -webkit-border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+    -moz-border-radius-bottomright: 4px;
+    -webkit-border-bottom-right-radius: 4px;
+}
+:root input.custom-radio ~ label[for=miles],
+:root input.custom-radio ~ label[for=litres] {
+    border-top-left-radius: 4px;
+    -moz-border-radius-topleft: 4px;
+    -webkit-border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+}
+:root input.custom-radio ~ label[for=usgallons] {
+    border-left: 0;
+}
+:root input.custom-radio:checked ~ label {
+    background-image: -moz-linear-gradient(top, #ebebeb, #fefefe);
+    background-image: -webkit-linear-gradient(top, #ebebeb, #fefefe);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, .2) inset;
+    color: #707070;
+    text-shadow: 0 0 2px #fff;
+}
+:root input.custom-radio:checked ~ label[for=kilometres],
+:root input.custom-radio ~ label[for=ukgallons],
+:root input.custom-radio ~ label[for=usgallons] {
+    border-left-color: #fff;
+}
+:root input.custom-radio:checked ~ label[for=miles] {
+    border-right-color: #bebebe;
 }
 </style>
+
 </head>
 
 <body>
+  <div class="form-style-8">
+    <h2 id="showtext">Papagayo to Opentoonz converter</h2> This program will make a copy of your existing .tnz scene file. The copy is saved in the directory where you run this program from, and has the name <b>exported.tnz</b>.<br>The new scenefile includes the papagayo data.
+    <br><br>
 
-<input type="file" id="fileinput" />
+    <form>
+      <b>1) Select your opentoonz scenefile:</b><br>
+      <input type="file" id="fileinputOT" />
+    </form>
 
-<textarea id='txtArea' rows="6" cols="100">
-</textarea>
-<br><hr>
-<textarea id='txtArea2' rows="20" cols="100">
+    <input type="checkbox" id="showToonzfile" name="tf" value="tf"> show OpenToonz file<br>
 
-</textarea>
+    <div id="otf" hidden="true">
+      <br><br>
+      <h2 id="testbutton"> Opentoonz file: </h2>
+      <form name="myform">
 
+        <textarea name="outputtext" id="tempholder" rows="14" cols="100"></textarea>
+        <form>
+
+    </div>
+
+    <br> Export your voice from papagayo in MOHO format (default). Be sure to use the preston blair phonemes in papagayo.
+    <br><br>
+    <form>
+      <b>2) Select your exported papagayo voice.dat:</b>
+      <input type="file" id="fileinputPG" />
+    </form>
+    <input type="checkbox" id="showPPGfile" name="pp" value="pp"> show papagayo data<br><br>
+ 
+    <div id="ppf" hidden="true">
+      <br><br>
+      <h2> Papagayo voice data:</h2>
+      <form name="myform2" id="form2">
+
+
+        <textarea name="outputtext2" id="txtArea2" rows="8" cols="100"></textarea>
+        <form>
+          <br>
+    </div>
+
+    <br><br>
+
+    <div id="pgElem"></div>
+
+<script>
+   var el, x, myTextArea, idurl, lcid, lidurl;
+   var LevSel = [];
+
+   $(document).ready(function() {
+
+     window.moveTo(0, 0);
+     window.resizeTo(screen.availWidth, screen.availHeight);
+
+     //disable simple view_source, just to annoy you ;)
+     $(document).on("contextmenu", function(e) {
+          return false;
+     });
+
+     function htmlDecode(input) {
+       var e = document.createElement('div');
+       e.innerHTML = input;
+       return e.childNodes.length === 0 ? "" : e.childNodes[0].nodeValue;
+     }
+
+     $('#showToonzfile').click(function() {
+       $("#otf").toggle(this.checked);
+     });
+
+     $('#showPPGfile').click(function() {
+       $("#ppf").toggle(this.checked);
+     });
+
+     function readSingleFile(lvl) {
+       var f = document.getElementById('fileinputPG').files[0];
+       var text = "";
+       var levelid = lvl; //x.elements[i].value;
+
+       if (f) {
+         var r = new FileReader();
+         r.onload = function(e) {
+           var contents = e.target.result;
+
+           var allRows = contents.split(/\r?\n|\r/);
+           var nr = 1;
+
+           allRows.forEach(function(s) {
+
+             if (nr < allRows.length - 2) {
+               var array = allRows[nr].split(/\s/),
+                 a = array[0],
+                 b = array[1];
+               b = b.replace(/rest|AI|etc|FV|L|MBP|O|U|WQ|E/gi, function(matched) {
+                 return mapObj[matched];
+               });
+
+               var nextarray = allRows[nr + 1].split(/\s/),
+                 c = nextarray[0],
+                 d = nextarray[1];
+
+               //OT scenefile framecount starts at 0 not 1. Hacky workaround here
+               var text = "\n<cell> " + (a - 1) + " " + (c - a) + "<level id=\'" + levelid + "\'/>" + b + " 0 </cell>";
+
+               var temp = $('#txtArea2').val();
+               temp += text;
+               $('#txtArea2').val(temp);
+
+             }
+
+             if (nr == allRows.length - 2) {
+               var array = allRows[nr].split(/\s/),
+                 a = array[0],
+                 b = array[1];
+
+               b = b.replace(/rest|AI|etc|FV|L|MBP|O|U|WQ|E/gi, function(matched) {
+                 return mapObj[matched];
+               });
+
+               //add 10 extra keyframes at the end
+               var c = parseInt(a) + 10;
+               var text = "\n<cell> " + (a - 1) + " " + (c - a) + "<level id=\'" + levelid + "\'/>" + b + " 0 </cell>";
+
+               var temp = $('#txtArea2').val();
+               temp += text;
+               $('#txtArea2').val(temp);
+
+             }
+
+             nr++
+           });
+
+         }
+         r.readAsText(f);
+
+         alert("Replacing level id: " + lvl);
+
+
+         myTextArea = document.getElementById('tempholder');
+         el = htmlDecode(myTextArea.innerHTML);
+         checkIt(el, lcid, document.myform2.outputtext2.value);
+
+         function checkIt(val, nbr, cnt) {
+           var nmbr = nbr;
+           var cntnt = cnt;
+
+           var regexp = new RegExp("(" + nmbr + "\\'>[\\s\\S]+?)(\\<cells\>)\\s+([\\s\\S]+?)\\s+\\<\\/cells>", "gi");
+           x = val.replace(regexp, "$1<cells>\n\t" + cntnt + "\n\t</cells>");
+
+           document.myform.outputtext.value = "";
+           document.myform.outputtext.value = x;
+
+         }
+
+       } else {
+         alert("Failed to load file");
+       }
+
+     }
+
+    $('#showtext').click(function() {
+       alert($('textarea#txtArea2').val());
+     });
+
+     function writeFileInIE(filePath, fileContent) {
+       try {
+         var fso = new ActiveXObject("Scripting.FileSystemObject");
+         var file = fso.OpenTextFile(filePath, 2, true);
+         file.WriteLine(fileContent);
+
+
+         file.Close();
+       } catch (e) {
+         if (e.number == -2146827859) {
+           alert('Unable to access local files due to browser security settings. ' +
+             'To overcome this, go to Tools->Internet Options->Security->Custom Level. ' +
+             'Find the setting for "Initialize and script ActiveX controls not marked as safe" and change it to "Enable" or "Prompt"');
+         }
+       }
+     }
+
+     function readSingleFile2(evt) {
+
+       var file = document.getElementById('fileinputOT').files[0];
+       if (file) {
+         // create reader
+         var reader = new FileReader();
+         reader.readAsText(file);
+         reader.onload = function(e) {
+ 
+           $('#tempholder').text(e.target.result);
+           getSingleFile(e.target.result);
+
+         };
+       }
+     };
+
+     // display file contents
+     $('#testbutton').click(function() {
+       alert(document.myform.outputtext.value);
+
+       //get file object
+       var file = document.getElementById('fileinputOT').files[0];
+       if (file) {
+         // create reader
+         var reader = new FileReader();
+         reader.readAsText(file);
+         reader.onload = function(e) {
+
+         };
+       }
+     });
+
+     function getSingleFile(lala) {
+
+       $('#pgElem').append('<br><br><h2> Level selection: </h2>');
+       $('#pgElem').append('<dl />');
+
+       var d = lala;
+
+       var html = '<br>Next you select the Level of your mouth. Just a tip, you could also make matching head-shapes (or other columns) if you need them, and use the same keyframes.<br><br><b>3) Select mouthlevel column:</b><br>';
+       $('dl').append($(html));
+
+       $(d).find('levels').first().find('level').each(function() {
+
+         var $col = $(this);
+         var str = $col.text();
+         var res = str.split('"');
+         var levelname = res[0];
+
+         var levelpath = $col.find('path').text();
+         idurl = $col.attr('id');
+
+         var html = '';
+         html += '<div class="levbut" onclick="toggleArrayItem(LevSel, ' + idurl + '); $(this).toggleClass(\'select1\')">Level path:<b>' + levelpath + '</b> | ';
+         html += ' name: <b>' + levelname + '</b> | ';
+         html += ' id: <b>' + idurl + '</b><br>';
+         html += '</div>';
+
+         $('dl').append($(html));
+       });
+     };
+
+     $('#savebut').click(function() {
+       myTextArea = document.getElementById('tempholder');
+       el = htmlDecode(myTextArea.innerHTML);
+       d = el;
+       $(d).find('columns > levelColumn').find('cells').each(function() {
+         var $col = $(this);
+         lcid = $col.closest('levelColumn').attr('id');
+         lidurl = $col.find('level').attr('id');
+         var html = '<div>\n';
+  
+         for (var i = 0; i < LevSel.length; i++) {
+           $('#txtArea2').val('');
+
+           if (LevSel[i] == lidurl) {
+             html += ' Found papagayo level: level id:' + lidurl + ' on levelColumn id:' + lcid + '<br>';
+
+             var temp = "";
+             readSingleFile(lidurl);
+
+           }
+         }
+
+         html += '\n</div>';
+         $('#myoutput').append($(html));
+       });
+       //save
+       alert("\tFile was saved as exported.tnz\n\tYou can close this window and open it in opentoonz.");
+       writeFileInIE('exported.tnz', x);
+     });
+
+     document.getElementById('fileinputOT').addEventListener('change', readSingleFile2, false);
+
+   });
+
+   //a = array v = item
+   function toggleArrayItem(a, v) {
+
+     var i = a.indexOf(v);
+     if (i === -1)
+       a.push(v);
+     else
+       a.splice(i, 1);
+   } 
+
+  </script>
+
+
+</div>
+
+<p>
+<br>
+<h2> Convert and save </h2>
+
+<b>4> Save your file and you're done! </b> &nbsp;&nbsp;&nbsp;&nbsp; <input type="button" id="savebut" value="Convert and save to OpenToonz file"></p>
+
+<br>
+<p id="myoutput"></p>
+<p>
+  <center>
+    <a href="https://github.com/tjoen/opentoonz-papagayo.hta-master">Current release on: https://github.com/tjoen/opentoonz-papagayo.hta-master</a>
+  </center>
+</p>
 </body>
 
-
 </html>
-
