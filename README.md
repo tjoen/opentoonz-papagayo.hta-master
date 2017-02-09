@@ -1,6 +1,11 @@
 # opentoonz-papagayo.hta
 It's a very handy hta/javascript gui that inserts and converts a papagayo voice.dat in a copy of your existing toonzfile and saves it to a new opentoonz scenefile.
 
+# Tutorial 
+I've put up a tutorial here: [opentoonz-papagayo.hta tutorial](https://youtu.be/_H_R_vgxZ8Y "tutorial")
+
+
+# Setup 
 To use it, you must make mouthshapes for your character. 
 The .hta file has a variable containing which frame numbers to use. 
 Use or adjust these to suit your character. Use the same format as shown now ( 0001 - 0011 ).
