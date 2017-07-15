@@ -530,8 +530,10 @@ input:-moz-placeholder {
          reader.readAsText(file);
          reader.onload = function(e) {
  
-           $('#tempholder').text(e.target.result);
-           getSingleFile(e.target.result);
+           // remove non ascii text in history formatting
+          var content = e.target.result.replace(/<history[\s\S]*?<\/history>/gm,"");
+           $('#tempholder').text(content);
+           getSingleFile(content);
 
          };
        }
